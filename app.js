@@ -15,7 +15,7 @@ function selectRoom(id){
  $('#room-title').textContent=r.name;$('#room-tag').textContent=r.tag;
  $('#room-description').textContent=r.description;
  $('#room-number').textContent=`0${['suite','deluxe','sea','junior','villa'].indexOf(id)+1} / 05`;
- $('#room-image').src=`/assets/${r.photos[0]}.jpg`;$('#room-image').alt=r.name;
+ $('#room-image').src=`/varadero-preview/assets/${r.photos[0]}.jpg`;$('#room-image').alt=r.name;
  $('#room-gallery').setAttribute('aria-label',`${words('Ver fotos de','View photos of')} ${r.name}`);
  $('#room-specs').replaceChildren(...r.specs.slice(0,3).map(t=>{const s=document.createElement('span');s.textContent=t;return s}));
  $('#room-details').href=r.url;
@@ -27,7 +27,7 @@ $$('[data-close]').forEach(b=>b.addEventListener('click',()=>b.closest('dialog')
 $$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}));
 $('.menu-toggle').addEventListener('click',()=>{openDialog($('#menu-dialog'));$('.menu-toggle').setAttribute('aria-expanded','true')});
 $('#menu-dialog').addEventListener('close',()=>$('.menu-toggle').setAttribute('aria-expanded','false'));
-function renderGallery(){const n=gallery[galleryIndex], room=Object.values(rooms).find(r=>r.photos.includes(n));const title=captions[n]||room?.name||'Varadero';$('#gallery-image').src=`/assets/${n}.jpg`;$('#gallery-image').alt=title;$('#gallery-caption').textContent=title;$('#gallery-count').textContent=`${String(galleryIndex+1).padStart(2,'0')} / ${String(gallery.length).padStart(2,'0')}`}
+function renderGallery(){const n=gallery[galleryIndex], room=Object.values(rooms).find(r=>r.photos.includes(n));const title=captions[n]||room?.name||'Varadero';$('#gallery-image').src=`/varadero-preview/assets/${n}.jpg`;$('#gallery-image').alt=title;$('#gallery-caption').textContent=title;$('#gallery-count').textContent=`${String(galleryIndex+1).padStart(2,'0')} / ${String(gallery.length).padStart(2,'0')}`}
 function openGallery(photos,start=0){gallery=photos;galleryIndex=start;renderGallery();openDialog($('#gallery-dialog'))}
 function moveGallery(delta){galleryIndex=(galleryIndex+delta+gallery.length)%gallery.length;renderGallery()}
 $('#room-gallery')?.addEventListener('click',()=>openGallery(rooms[selectedRoom].photos));
@@ -91,7 +91,7 @@ $$('[data-book]').forEach(b=>b.addEventListener('click',()=>{prepareDates();if($
 $('#booking-form').addEventListener('submit',e=>{const error=validateDates(arrival.value,departure.value);if(error){e.preventDefault();$('#booking-error').textContent=words({missing:'Elige las fechas de llegada y salida.',past:'La llegada no puede ser anterior a hoy.',order:'La salida debe ser posterior a la llegada.'}[error],{missing:'Please choose arrival and departure dates.',past:'Arrival cannot be in the past.',order:'Departure must be after arrival.'}[error]);return}$('#booking-error').textContent='';renderFields()});
 prepareDates();
 const heroImages=['pool-editorial','hotel','sunset'];
-$$('[data-slide]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.slide);$('#hero-image').src=`/assets/${heroImages[i]}.jpg`;$('#hero-image').alt=captions[heroImages[i]];$$('[data-slide]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',x===b)})}));
+$$('[data-slide]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.slide);$('#hero-image').src=`/varadero-preview/assets/${heroImages[i]}.jpg`;$('#hero-image').alt=captions[heroImages[i]];$$('[data-slide]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',x===b)})}));
 const contact=$('#contact-form');
 if(contact){
  const query=new URLSearchParams(location.search);
