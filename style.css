@@ -61,3 +61,5 @@ dialog{background:var(--paper);color:var(--ink);border:0;padding:0;border-radius
 .hero-logo{display:block;width:170px;height:auto;margin:0 auto 26px;filter:drop-shadow(0 2px 14px rgba(15,27,23,.35))}
 .vambu-logo{display:block;width:150px;height:auto;margin-bottom:30px}
 @media(max-width:800px){.hero-logo{width:128px;margin-bottom:18px}.vambu-logo{width:118px;margin-bottom:22px}}
+/* Phones (owner 02.10): content photos show whole at their own proportions instead of tall crops; heroes stay full-screen */
+@media(max-width:600px){.editorial-photo,.celebrate-photo,.destination-photo,.vambu-main figure,.collection-room .image-frame{height:auto!important;min-height:0}.editorial-photo>div,.celebrate-photo>div,.destination-photo>div,.vambu-main figure>div,.collection-room .image-frame>div,.editorial-photo img,.celebrate-photo img,.destination-photo img,.vambu-main figure img,.collection-room .image-frame img{height:auto}.room-photo{height:auto!important;aspect-ratio:4/3}.gallery-tile{aspect-ratio:4/3}.gallery-tile:nth-child(3n+2){margin-top:0}}
