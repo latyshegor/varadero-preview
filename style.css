@@ -101,3 +101,5 @@ dialog{background:var(--paper);color:var(--ink);border:0;padding:0;border-radius
 .cookie-category input:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
 .footer-cookie-settings{font-size:inherit;letter-spacing:inherit;color:inherit;text-decoration:none}
 @media(max-width:600px){.cookie-banner{right:16px;left:16px;bottom:16px;width:auto;padding:20px 18px 14px}.cookie-title{font-size:21px}.cookie-dialog{padding:46px 22px 24px}.cookie-dialog h2{font-size:27px}.cookie-dialog .cookie-actions{flex-direction:column}}
+.last-call>img.beach-logo{width:150px;height:auto;margin-bottom:26px}
+@media(max-width:600px){.last-call>img.beach-logo{width:118px}}
