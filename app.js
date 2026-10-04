@@ -106,4 +106,24 @@ new IntersectionObserver(([entry])=>$('#header').classList.toggle('is-sticky',!e
 const reveals=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');reveals.unobserve(e.target)}}),{threshold:.12});$$('.reveal').forEach(e=>reveals.observe(e));
 $('#year').textContent=new Date().getFullYear();
 addEventListener('click',e=>$$('.lang-menu[open]').forEach(d=>{if(!d.contains(e.target))d.open=false}));
+// Cookie consent: Google Analytics (the hotel's GA4 property) loads only after consent and only on the real domain, never on the preview.
+const GA='G-V5VHR1GWCJ', CONSENT='varadero-consent', YEAR=365*864e5;
+const readConsent=()=>{try{const c=JSON.parse(localStorage.getItem(CONSENT));return c&&Date.now()-c.ts<YEAR?c:null}catch{return null}};
+function loadAnalytics(){
+ if(window.gtag||!/(^|\.)el-varadero\.com$/.test(location.hostname))return;
+ window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',GA);
+ const s=document.createElement('script');s.async=true;s.src=`https://www.googletagmanager.com/gtag/js?id=${GA}`;document.head.append(s);
+}
+function saveConsent(analytics){
+ try{localStorage.setItem(CONSENT,JSON.stringify({analytics,ts:Date.now()}))}catch{}
+ if(analytics)loadAnalytics();else document.cookie.split(';').map(c=>c.split('=')[0].trim()).filter(n=>n.startsWith('_ga')).forEach(n=>{document.cookie=`${n}=; Max-Age=0; path=/; domain=.${location.hostname.replace(/^www\./,'')}`;document.cookie=`${n}=; Max-Age=0; path=/`});
+ $('#cookie-banner').hidden=true;if($('#cookie-dialog').open)$('#cookie-dialog').close();
+}
+$$('[data-consent]').forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.consent;
+ if(a==='open'){$('#consent-analytics').checked=!!readConsent()?.analytics;openDialog($('#cookie-dialog'));return}
+ saveConsent(a==='accept'?true:a==='reject'?false:$('#consent-analytics').checked)}));
+const consent=readConsent();if(consent){if(consent.analytics)loadAnalytics()}else $('#cookie-banner').hidden=false;
+// Conversions for GA: booking search sent to the booking engine, phone and email clicks
+$('#booking-form').addEventListener('submit',e=>{if(!e.defaultPrevented)window.gtag?.('event','begin_checkout',{arrival:arrival.value,departure:departure.value})});
+addEventListener('click',e=>{const a=e.target.closest('a[href^="tel:"],a[href^="mailto:"]');if(a)window.gtag?.('event',a.href.startsWith('tel:')?'click_phone':'click_email')});
 if($('#room-panel'))selectRoom(selectedRoom);
